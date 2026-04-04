@@ -1,0 +1,62 @@
+<main class="page-shell">
+    <section class="aurora" aria-hidden="true"></section>
+
+    <article class="status-card" aria-live="polite">
+        <header class="card-header">
+            <p class="kicker">DevOps Health Monitor</p>
+            <h1>Estado del servicio backend</h1>
+            <p class="subtitle">Vista rapida del endpoint principal para validar disponibilidad y respuesta.</p>
+        </header>
+
+        <div class="status-row">
+            <span class="status-label">Estado actual</span>
+            <span
+                class="badge"
+                [class.badge-loading]="isLoading()"
+                [class.badge-ok]="!isLoading() && !hasError() && isHealthy()"
+                [class.badge-fail]="!isLoading() && (!!hasError() || !isHealthy())"
+            >
+                @if (isLoading()) {
+                    Consultando...
+                } @else if (hasError()) {
+                    No disponible
+                } @else {
+                    {{ isHealthy() ? 'Operativo' : 'Con alertas' }}
+                }
+            </span>
+        </div>
+
+        <section class="grid">
+            <div class="panel">
+                <p class="panel-title">Mensaje</p>
+                @if (isLoading()) {
+                    <p class="value loading-line">Cargando respuesta del backend...</p>
+                } @else if (hasError()) {
+                    <p class="value error">{{ hasError() }}</p>
+                } @else {
+                    <p class="value">{{ message() }}</p>
+                }
+            </div>
+
+            <div class="panel">
+                <p class="panel-title">Codigo HTTP</p>
+                @if (status() !== null) {
+                    <p class="metric">{{ status() }}</p>
+                } @else {
+                    <p class="metric metric-placeholder">--</p>
+                }
+            </div>
+        </section>
+
+        <footer class="card-footer">
+            <p>
+                @if (lastUpdated()) {
+                    Ultima actualizacion: {{ lastUpdated() | date:'short' }}
+                } @else {
+                    Aun sin actualizaciones
+                }
+            </p>
+            <button type="button" class="refresh-btn" (click)="loadStatus()">Reintentar</button>
+        </footer>
+    </article>
+</main>
