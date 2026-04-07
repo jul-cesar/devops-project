@@ -45,7 +45,7 @@ export class App implements OnInit {
           this.isLoading.set(false);
         },
         error: () => {
-          this.hasError.set('No se pudo conectar con el backend en http://localhost:8080/api/devops');
+          this.hasError.set('No se pudo conectar con el backend');
           this.isLoading.set(false);
         }
       });
