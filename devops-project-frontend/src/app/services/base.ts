@@ -10,6 +10,6 @@ export class Base {
   http = inject(HttpClient);
 
   getMessage(): Observable<BaseResponse > {
-    return this.http.get<BaseResponse>('http://localhost:8080/api/devops');
+    return this.http.get<BaseResponse>('/api/devops');
   }
 }
