@@ -16,7 +16,7 @@ public class BaseController {
 
         BaseResponse res = new BaseResponse(
                 200,
-                "Hola"
+                "Hola nuevo"
         );
         return ResponseEntity.ok(res);
     }
